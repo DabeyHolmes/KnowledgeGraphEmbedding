@@ -2,3 +2,5 @@ checkpoint
 *.npy
 *.log
 /models
+/.idea
+__pycache__
