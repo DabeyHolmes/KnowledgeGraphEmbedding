@@ -85,7 +85,7 @@ def parse_args(args=None):
                         help='url used to set up distributed training')
     # parser.add_argument('--distributed', default='no', type=str)  # yes / no
     parser.add_argument('--distributed', action='store_true', help='Use distributed', default=False)
-    parser.add_argument('--local_rank', default=0, type=int)
+    # parser.add_argument('--local_rank', default=0, type=int)
 
     # apex
     parser.add_argument('--apex', action='store_true', help='Use apex',default=False)
@@ -169,7 +169,8 @@ def main(args):
     time_res = AverageMeter(name='time', fmt=':.6f', start_count_index=10)
     if args.distributed:
         # ===TODO===
-        rank = args.local_rank
+        rank = torch.distributed.get_rank()
+        args.local_rank = rank
         dist_url = args.dist_url
         # torch.cuda.set_device(rank)
         # args.device = torch.device("cuda", args.local_rank)
